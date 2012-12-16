@@ -3,7 +3,7 @@ var app = app || {}
 app.GridView = Backbone.View.extend({
 	
 	initialize: function(args){
-		args.input.change(this.checkAnswer.bind(this)),
+		args.input.keypress(this.checkAnswer.bind(this)),
 		this.multiply = true
 	},
 	
@@ -138,6 +138,10 @@ app.GridView = Backbone.View.extend({
 	},
 	
 	checkAnswer: function(evt){
+		
+		if(evt != null && evt.keyCode != 13){
+			return //IE workaround instead of 'change' event
+		}
 		
 		var active = this.collection.getActiveCell()
 
