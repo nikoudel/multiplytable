@@ -1,0 +1,4 @@
+multiplytable
+=============
+
+Multiplication table game
