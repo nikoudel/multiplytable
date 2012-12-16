@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+	<script src="/public/js/tiles/ext/jquery-1.8.3.min.js"></script>
+	<script src="/public/js/tiles/ext/underscore-min.js"></script>
+	<script src="/public/js/tiles/ext/backbone-min.js"></script>
+	<script src="/public/js/tiles/ext/backbone.localStorage-min.js"></script>
+	
+	<script src="/public/js/tiles/Common.js"></script>
+	<script src="/public/js/tiles/Cell.js"></script>
+	<script src="/public/js/tiles/Grid.js"></script>
+
+</head>
+
+<body>
+    <div id="mainContainer">
+    
+		<div id="gridContainer">
+			<div id="grid"></div>
+			<input id="numberInput" type="text" value="" autofocus />
+		</div>
+		
+		<div id="right">
+		
+			<div id="restartDiv">
+			
+				<img id="restart" width="50" heght="50" />
+				
+				<!--div>1<input type="checkbox"/></div>
+				<div>2<input type="checkbox"/></div-->
+				
+			</div>
+			
+			<div id="pic"></div>
+			
+		</div>
+		
+	</div>
+    
+    <style>
+    
+		#gridContainer {
+			float: left;
+		}
+
+		#right {
+			float: left;
+			margin: 20px 0px 0px 20px;
+			text-align: left;
+		}
+
+		#restartDiv {
+			display: inline-block;
+			text-align: center;
+		}
+
+		#pic {
+			float: left;
+			margin: 100px 0px 0px 0px;
+		}
+
+		#grid {
+			background-color: #0e0e0e;
+			width: 730px;
+			height: 730px;
+			margin: 0px 0px 20px 10px;
+		}
+
+		#grid div {
+			float: left;
+			width: 70px;
+			height: 70px;
+			margin: 10px 0 0 10px;
+			position: relative;
+			overflow: hidden;
+		}        
+
+		#numberInput {
+			border:solid 2px green;
+			border-radius:15px;
+			outline: none;
+			height: 28px;
+			width: 200px;
+			text-align: center;
+			font-family: Sansation,Arial;
+			font-size:125%;
+			margin: 0px 0px 0px 270px;
+		}
+
+		.axis {
+			font-size: 36px;
+			width: 100%;
+			height: 100%;
+			line-height: 70px;
+			position: absolute;
+			text-align: center;
+			display: block;
+			color: #ffffff;
+			background-color: #0B0B61;
+		}
+
+		.activeAxis {
+			background-color: #2DAE4B;
+		}
+        
+	</style>
+	
+	<script>
+		
+		var gridView = new app.GridView({
+				el: $("#grid"),
+				collection: new app.Cells,
+				input: $("#numberInput"),
+				pic: $("#pic"),
+				restart: $("#restart")})
+		
+		gridView.render()
+		
+		gridView.collection.fetch({
+			success: gridView.renderCells.bind(gridView),
+			error: function(){alert("collection.fetch failed")}
+		})
+		
+	</script>
+	
+</body>
+</html>
