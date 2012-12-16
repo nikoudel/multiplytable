@@ -4,7 +4,8 @@ app.Cell = Backbone.Model.extend({
 	
 	defaults: {
 		isActive: false,
-		isOpen: false
+		isOpen: false,
+		smile: "none"
 	},
 	
 	initialize: function(args){
@@ -95,8 +96,7 @@ app.Cells = Backbone.Collection.extend({
 		
 		if(currentActiveCell != null){
 			
-			currentActiveCell.set({isActive: false, isOpen: true})
-			currentActiveCell.save()
+			currentActiveCell.save({isActive: false, isOpen: true})
 		}
 		
 		var closedCells = this.filter(function(model){
@@ -113,8 +113,7 @@ app.Cells = Backbone.Collection.extend({
 		
 		var randomCell = app.randomElement(closedCells)
 		
-		randomCell.set({isActive: true})
-		randomCell.save()
+		randomCell.save({isActive: true})
 	}
 })
 
@@ -143,7 +142,7 @@ app.CellView = Backbone.View.extend({
 		
 		this.activateAxis(m.isActive)
 		
-		this.blink(m.isActive)
+		this.blink()
 	},
 	
 	showPic: function(){
@@ -170,11 +169,20 @@ app.CellView = Backbone.View.extend({
 		}
 	},
 	
-	blink: function(isActive, img){
+	blink: function(){
 		
 		this.model.stopBlinking()
 		
-		if(isActive){
+		if(this.model.attributes.smile == "happy"){
+			
+			this.smile(app.happySmile)
+			
+		}else if(this.model.attributes.smile == "sad"){
+			
+			this.smile(app.sadSmile)
+			
+		}else if(this.model.attributes.isActive){
+			
 			this.model.isBlinking = setInterval(function(){
 				
 				if(this.$el.html() == ''){
@@ -184,5 +192,16 @@ app.CellView = Backbone.View.extend({
 				}
 			}.bind(this), 1000)
 		}
+	},
+	
+	smile: function(smileFile){
+		
+		this.$el.html('<img src="' + smileFile + '"/>')
+		
+		setTimeout(function(){
+				
+			this.model.save({smile: "none"})
+			
+		}.bind(this), 2000)
 	}
 })

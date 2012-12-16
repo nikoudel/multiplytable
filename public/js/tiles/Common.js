@@ -6,6 +6,10 @@ app.question = app.images + "question.png"
 app.restart_up = app.images + "restart.png"
 app.restart_down = app.images + "restart_pressed.png"
 app.activeAxis = "activeAxis"
+app.happySmile = app.images + "happy.png"
+app.sadSmile = app.images + "sad.png"
+app.multiply = app.images + "multiply.png"
+app.plus = app.images + "plus.png"
 
 app.getIcons = function(){
 	

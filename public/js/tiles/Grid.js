@@ -3,13 +3,15 @@ var app = app || {}
 app.GridView = Backbone.View.extend({
 	
 	initialize: function(args){
-		args.input.change(this.checkAnswer.bind(this))
+		args.input.change(this.checkAnswer.bind(this)),
+		this.multiply = true
 	},
 	
 	render: function () {
 		
 		this.generateCellDivs()
 		this.setRestartEvents()
+		this.setMultiplyEvents()
 		
 		return this
 	},
@@ -81,12 +83,31 @@ app.GridView = Backbone.View.extend({
 			
 			this.collection.each(function(cell){
 				
-				cell.set({isActive:false, isOpen:false})
+				cell.set({isActive:false, isOpen:false, smile: "none"})
 				cell.stopBlinking()
 				cell.save()
 			})
 			
 			this.checkAnswer()
+			
+		}.bind(this))
+	},
+	
+	setMultiplyEvents: function(){
+		
+		this.options.multiply.attr("src", app.multiply)
+		
+		this.options.multiply.click(function(evt){
+			
+			if(this.options.multiply.attr("src") == app.multiply){
+				this.options.multiply.attr("src", app.plus)
+				this.multiply = false
+			}else{
+				this.options.multiply.attr("src", app.multiply)
+				this.multiply = true
+			}
+			
+			this.options.input.focus()
 			
 		}.bind(this))
 	},
@@ -119,24 +140,35 @@ app.GridView = Backbone.View.extend({
 	checkAnswer: function(evt){
 		
 		var active = this.collection.getActiveCell()
+
+		this.deactivateAxis()
 		
 		if(active == null){
-			this.deactivateAxis()
+			
 			this.collection.changeActiveCell(null)
+			
 		}else{
 			if(evt != null){
 				
-				var x = active.id[0]
-				var y = active.id[1]
+				var x = parseInt(active.id[0])
+				var y = parseInt(active.id[1])
 				
-				if(x * y == evt.target.value){
-					this.deactivateAxis()
+				if((this.multiply && x * y == evt.target.value)
+					|| (!this.multiply && x + y == evt.target.value)){
+					
+					active.set({smile: "happy", isActive: false})
+					
 					this.collection.changeActiveCell(active)
+					
+				} else {
+					
+					active.set({smile: "sad"})
 				}
 				
 				evt.target.value = ""
 			}
 		}
+		
 		this.options.input.focus()
 	},
 	

@@ -27,6 +27,7 @@
 		
 			<div id="restartDiv">
 			
+				<img id="multiply" width="50" heght="50" />
 				<img id="restart" width="50" heght="50" />
 				
 				<!--div>1<input type="checkbox"/></div>
@@ -53,7 +54,7 @@
 		}
 
 		#restartDiv {
-			display: inline-block;
+			width: 50px;
 			text-align: center;
 		}
 
@@ -115,7 +116,8 @@
 				collection: new app.Cells,
 				input: $("#numberInput"),
 				pic: $("#pic"),
-				restart: $("#restart")})
+				restart: $("#restart"),
+				multiply: $("#multiply")})
 		
 		gridView.render()
 		
