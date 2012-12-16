@@ -1,4 +1,4 @@
 multiplytable
 =============
 
-Multiplication table game
+Multiplication table ["game"](http://asd.kapsi.fi)
