@@ -2,8 +2,8 @@
 <html>
 <head>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
 	<script src="/public/js/tiles/ext/jquery-1.8.3.min.js"></script>
 	<script src="/public/js/tiles/ext/underscore-min.js"></script>
 	<script src="/public/js/tiles/ext/backbone-min.js"></script>
@@ -16,8 +16,8 @@
 </head>
 
 <body>
-    <div id="mainContainer">
-    
+	<div id="mainContainer">
+	
 		<div id="gridContainer">
 			<div id="grid"></div>
 			<input id="numberInput" type="text" value="" autofocus />
@@ -30,19 +30,22 @@
 				<img id="multiply" width="50" heght="50" />
 				<img id="restart" width="50" heght="50" />
 				
+				<div id="errors"></div>
+				
 				<!--div>1<input type="checkbox"/></div>
 				<div>2<input type="checkbox"/></div-->
 				
 			</div>
+
 			
 			<div id="pic"></div>
 			
 		</div>
 		
 	</div>
-    
-    <style>
-    
+
+	<style>
+	
 		#gridContainer {
 			float: left;
 		}
@@ -77,7 +80,7 @@
 			margin: 10px 0 0 10px;
 			position: relative;
 			overflow: hidden;
-		}        
+		}
 
 		#numberInput {
 			border:solid 2px green;
@@ -106,18 +109,20 @@
 		.activeAxis {
 			background-color: #2DAE4B;
 		}
-        
+
 	</style>
 	
 	<script>
 		
 		var gridView = new app.GridView({
-				el: $("#grid"),
-				collection: new app.Cells,
-				input: $("#numberInput"),
-				pic: $("#pic"),
-				restart: $("#restart"),
-				multiply: $("#multiply")})
+			el: $("#grid"),
+			collection: new app.Cells,
+			input: $("#numberInput"),
+			pic: $("#pic"),
+			restart: $("#restart"),
+			multiply: $("#multiply"),
+			errors: $("#errors")
+		})
 		
 		gridView.render()
 		

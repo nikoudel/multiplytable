@@ -83,7 +83,7 @@ app.GridView = Backbone.View.extend({
 			
 			this.collection.each(function(cell){
 				
-				cell.set({isActive:false, isOpen:false, smile: "none"})
+				cell.set({isActive:false, isOpen:false, smile: "none", errors: 0})
 				cell.stopBlinking()
 				cell.save()
 			})
@@ -129,7 +129,10 @@ app.GridView = Backbone.View.extend({
 				var cellView = new app.CellView({
 					el: $("#" + cell.id),
 					model: cell,
-					pic: this.options.pic})
+					pic: this.options.pic,
+					errors: this.options.errors,
+					calculateErrors: this.calculateErrors.bind(this)
+				})
 				
 				cellView.render()
 				
@@ -165,8 +168,8 @@ app.GridView = Backbone.View.extend({
 					this.collection.changeActiveCell(active)
 					
 				} else {
-					
-					active.set({smile: "sad"})
+					errors = active.get("errors")
+					active.set({smile: "sad", errors: errors + 1})
 				}
 				
 				evt.target.value = ""
@@ -183,5 +186,16 @@ app.GridView = Backbone.View.extend({
 			$("#x" + i).removeClass(app.activeAxis)
 			$("#y" + i).removeClass(app.activeAxis)
 		}
+	},
+
+	calculateErrors: function(){
+
+		errors = 0
+
+		this.collection.each(function(cell){
+			errors += cell.get("errors")
+		}, this)
+
+		return errors
 	}
 })

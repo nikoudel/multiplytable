@@ -5,7 +5,8 @@ app.Cell = Backbone.Model.extend({
 	defaults: {
 		isActive: false,
 		isOpen: false,
-		smile: "none"
+		smile: "none",
+		errors: 0
 	},
 	
 	initialize: function(args){
@@ -141,6 +142,8 @@ app.CellView = Backbone.View.extend({
 		}
 		
 		this.activateAxis(m.isActive)
+
+		this.showErrors()
 		
 		this.blink()
 	},
@@ -203,5 +206,18 @@ app.CellView = Backbone.View.extend({
 			this.model.save({smile: "none"})
 			
 		}.bind(this), 2000)
+	},
+
+	showErrors: function(){
+
+		errors = this.options.calculateErrors()
+
+		if(errors == 0){
+			color = "green"
+		}else{
+			color = "red"
+		}
+		
+		this.options.errors.html('<h1 style="color:' + color + ';">' + errors + '</h1>')
 	}
 })
