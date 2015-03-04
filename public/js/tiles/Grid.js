@@ -146,6 +146,10 @@ app.GridView = Backbone.View.extend({
 			return //IE workaround instead of 'change' event
 		}
 		
+		if(evt.target.value === ""){
+			return
+		}
+		
 		var active = this.collection.getActiveCell()
 
 		this.deactivateAxis()
