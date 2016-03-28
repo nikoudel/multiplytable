@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run --name=kertotaulu --restart=always -e VIRTUAL_HOST=kertotaulu.tk -p 8004:80 -d kertotaulu:latest /sbin/my_init
+docker run --name=kertotaulu --restart=always -e VIRTUAL_HOST=kertotaulu.tk -h kertotaulu.tk -p 8004:80 -d kertotaulu:latest /sbin/my_init
