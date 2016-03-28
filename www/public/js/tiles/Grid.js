@@ -142,13 +142,17 @@ app.GridView = Backbone.View.extend({
 	
 	checkAnswer: function(evt){
 		
-		if(evt != null && evt.keyCode != 13){
+		if(evt == null){
+			return;
+		}
+
+		if(evt.keyCode != 13){
 			return //IE workaround instead of 'change' event
 		}
-		
-		if(evt.target.value === ""){
-			return
-		}
+
+        	if(evt.target.value === ""){
+            		return
+        	}
 		
 		var active = this.collection.getActiveCell()
 
