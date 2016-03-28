@@ -29,7 +29,7 @@ app.GridView = Backbone.View.extend({
 				
 				div.css('background', "url('" + app.iconBackground + "')")
 				
-			}else{
+			} else {
 				
 				div.addClass("axis")
 				
@@ -87,6 +87,8 @@ app.GridView = Backbone.View.extend({
 				cell.stopBlinking()
 				cell.save()
 			})
+
+			$("#numberInput").val("")
 			
 			this.checkAnswer()
 			
@@ -139,21 +141,13 @@ app.GridView = Backbone.View.extend({
 			}, this)
 		}
 	},
-	
+
 	checkAnswer: function(evt){
-		
-		if(evt == null){
-			return;
+
+		if(evt != null && (evt.keyCode != 13 || evt.target.value === "")){
+			return
 		}
 
-		if(evt.keyCode != 13){
-			return //IE workaround instead of 'change' event
-		}
-
-        	if(evt.target.value === ""){
-            		return
-        	}
-		
 		var active = this.collection.getActiveCell()
 
 		this.deactivateAxis()
@@ -162,7 +156,8 @@ app.GridView = Backbone.View.extend({
 			
 			this.collection.changeActiveCell(null)
 			
-		}else{
+		} else {
+
 			if(evt != null){
 				
 				var x = parseInt(active.id[0])
